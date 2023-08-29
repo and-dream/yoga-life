@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des membres{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <table class="table table-light table-striped">
+        <thead>
+            <!-- email, role, pseudo, nom, prenom, civilite, date enregistrement-->
+
+            <th>Email</th>
+            <th>Pseudo</th>
+            <th>Civilite</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Role</th>
+            <th>Date Enregistrement</th>
+            <th>Actions</th>
+        </thead>
+
+        <tbody>
+            {% for membre in membres %}
+                <td>{{ membre.email }}</td>
+                <td>{{ membre.pseudo }}</td>
+                <td>{{ membre.civilite }}</td>
+                <td>{{ membre.nom }}</td>
+                <td>{{ membre.prenom }}</td>
+                <td>{{ membre.role }}</td>
+                <td>{{ membre.dateEnregistrement }}</td>
+
+                
+            {% endfor %}
+        </tbody>
+    
+    
+    </table>
+
+
+
+</div>
+{% endblock %}
