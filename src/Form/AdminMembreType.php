@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Membre;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AdminMembreType extends AbstractType
 {
@@ -14,12 +16,25 @@ class AdminMembreType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
+            ->add('roles', ChoiceType::class, [
+                'multiple' => true,
+                'expanded' => true,
+                'label' => 'Statut',
+                'choices' => [
+                    'User' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN',
+                ],
+            ])
             // ->add('password')
             ->add('pseudo')
             ->add('nom')
             ->add('prenom')
-            ->add('civilite')
+            ->add('civilite', ChoiceType::class, [
+                'choices' => [
+                    'Homme' => 'homme',
+                    'Femme' => 'femme',
+                ]
+            ])
             ->add('date_enregistrement', DateType::class, [
                 'widget' => 'single_text',
             ])

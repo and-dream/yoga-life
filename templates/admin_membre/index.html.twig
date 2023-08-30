@@ -1,41 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des membres{% endblock %}
+{% block title %}Gestion des membres
+{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <table class="table table-light table-striped">
-        <thead>
-            <!-- email, role, pseudo, nom, prenom, civilite, date enregistrement-->
+	<div class="container">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Email</th>
+					<th scope="col">Pseudo</th>
+					<th scope="col">Role</th>
+					<th scope="col">Civilite</th>
+					<th scope="col">Nom</th>
+					<th scope="col">Prenom</th>
+					<th scope="col">Date Enregistrement</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for membre in allUsers %}
+				<tr class="table-primary">
+					<td>{{ membre.email}}</td>
+					<td>{{ membre.pseudo}}</td>
+					<td>{{ membre.roles[0]}}</td>
+					<td>{{ membre.civilite}}</td>
+					<td>{{ membre.nom}}</td>
+					<td>{{ membre.prenom}}</td>
+					<td>{{ membre.dateEnregistrement|date('d/m/Y')}}</td>   
+                    <td>
+                     <a href="{{ path('modifier_membre', {id: membre.id} ) }}"><i class="bi bi-pencil-square"></i></a>
+                    <a href="{{ path('supprimer_membre', {id: membre.id} ) }}"><i class="bi bi-trash3"></i></a>
+                    </td>
+                   
+				</tr>
+                {% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-            <th>Email</th>
-            <th>Pseudo</th>
-            <th>Civilite</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Role</th>
-            <th>Date Enregistrement</th>
-            <th>Actions</th>
-        </thead>
-
-        <tbody>
-            {% for membre in membres %}
-                <td>{{ membre.email }}</td>
-                <td>{{ membre.pseudo }}</td>
-                <td>{{ membre.civilite }}</td>
-                <td>{{ membre.nom }}</td>
-                <td>{{ membre.prenom }}</td>
-                <td>{{ membre.role }}</td>
-                <td>{{ membre.dateEnregistrement }}</td>
-
-                
-            {% endfor %}
-        </tbody>
+    <div class="container">
+    <a class="btn btn-primary mb-2" href="{{ path('app_register')}}" role="button">Ajouter un membre</a>
     
+    <h1 class="mt-2">Modifier un membre</h1>
+        {{ form_start(formMembre, {
+            attr: {novalidate: 'novalidate'}
+        }) }}
+
+
+        {{form_row(formMembre.email)}}
+        {{form_row(formMembre.pseudo)}}
+        {{form_row(formMembre.civilite)}}
+        {{form_row(formMembre.nom)}}
+        {{form_row(formMembre.prenom)}}
+        {{form_row(formMembre.date_enregistrement)}}
+
+        {{ form_end(formMembre)}}
     
-    </table>
-
-
-
-</div>
+    </div>
 {% endblock %}
