@@ -23,7 +23,15 @@
 				<tr class="table-primary">
 					<td>{{ membre.email}}</td>
 					<td>{{ membre.pseudo}}</td>
-					<td>{{ membre.roles[0]}}</td>
+					<td>
+                            {% for roles in membre.roles %}
+                                {% if roles == "ROLE_USER" %}
+                                    Utilisateur
+                                {% elseif roles == "ROLE_ADMIN" %}
+                                    Administrateur
+                                {% endif %}
+                            {% endfor %}
+                        </td>
 					<td>{{ membre.civilite}}</td>
 					<td>{{ membre.nom}}</td>
 					<td>{{ membre.prenom}}</td>

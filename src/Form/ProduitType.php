@@ -40,9 +40,6 @@ class ProduitType extends AbstractType
             ])
             ->add('prix')
             ->add('stock')
-            ->add('date_enregristrement', DateType::class, [
-                'widget' => 'single_text',
-            ])
             ->add('valider', SubmitType::class)
         ;
     }

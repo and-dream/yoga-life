@@ -1,20 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminCommandeController!{% endblock %}
+{% block title %}Gestion Commandes
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div class="container">
+		<h1 class="text-center">Gestion Commandes</h1>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+                {% for data in tab %}
+                  {% if data != "id" %}
+						<th>{{ data }}</th>
+					{% endif %}  
+                {% endfor %}
+					<th scope="col">Commande</th>
+					<th scope="col">Membre</th>
+					<th scope="col">Produit</th>
+					<th scope="col">Actions</th>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+				</tr>
+			</thead>
+			<tbody>
+				{% for data in orders %}
+				<tr class="table-active">
+					<td>{{ data.id}}</td>
+					<td>{{ data.dateEnregistrement|date('d/m/Y') }}</td>
+					<td>{{ data.membre.pseudo}}</td>
+					<td>{{ data.produit.titre}}</td>
+					<td>{{ data.quantite}}</td>
+					<td>{{ data.montant}}
+						€</td>
+					<td>{{ data.etat}}</td>
+					<td>
+						<a href="#">
+							<i class="bi bi-pencil-square"></i>
+						</a>
+						<a href="#">
+							<i class="bi bi-trash3"></i>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/stagiaire/Desktop/yogalife/src/Controller/AdminCommandeController.php'|file_link(0) }}">src/Controller/AdminCommandeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/stagiaire/Desktop/yogalife/templates/admin_commande/index.html.twig'|file_link(0) }}">templates/admin_commande/index.html.twig</a></code></li>
-    </ul>
 </div>
 {% endblock %}

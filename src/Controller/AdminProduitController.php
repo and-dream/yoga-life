@@ -20,16 +20,16 @@ class AdminProduitController extends AbstractController
     
     #[Route('/ajouter', name: 'ajouter_produit')]
     #[Route('/modifier/{id}', name: 'modifier_produit')]
-    public function formProduct(Request $rq, EntityManagerInterface $manager, Produit $produit =null, SluggerInterface $slugger, ProduitRepository $repo) : Response
+    public function formProduct(Request $rq, EntityManagerInterface $manager, Produit $produit =null, SluggerInterface $slugger) : Response
     {
         if($produit == null)
         {
             $produit = new Produit;
-            $produit->setDateEnregristrement(new DateTime);
+            $produit->setDateEnregristrement(new \DateTime);
         }
 
         $editMode = $produit->getId() !== null;
-        $allProducts = $repo->findAll();
+        
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($rq);
 
@@ -65,18 +65,36 @@ class AdminProduitController extends AbstractController
                
                 $this->addFlash('success', "Vous avez bien ajouté un nouveau produit");              
             }
-            return $this->redirectToRoute('ajouter_produit');
+            return $this->redirectToRoute('gestion_produit');
 
         }
 
 
-        return $this->render('admin_produit/index.html.twig', [
+        return $this->render('admin_produit/form.html.twig', [
             'form' => $form,
-            'allProducts' => $allProducts,
-            'editMode' => $produit->getId()!=null
+            'editMode' => $editMode,
         ]);
 
     }
 
+    #[Route('/gestion', name:'gestion_produit')]
+    public function gestion(ProduitRepository $repo): Response  
+    {
+        $allProducts = $repo->findAll();
+        return $this->render('admin_produit/index.html.twig', [    
+            'allProducts' => $allProducts,
+            
+        ]);
+    }
+
+    #[Route('/supprimer/{id}', name: 'supprimer_produit')]
+    public function supprimer(Produit $produit, EntityManagerInterface $manager)   
+
+    {
+        $manager->remove($produit);    
+        $manager->flush();     
+
+        return $this->redirectToRoute('gestion_produit'); 
+    }
    
 }
