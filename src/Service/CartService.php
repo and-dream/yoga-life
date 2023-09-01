@@ -82,7 +82,7 @@ class CartService
 
         foreach($this->getCartWithData() as $item)
         {
-            $sousTotal = $item['product']->getPrice() * $item['quantity'];
+            $sousTotal = $item['product']->getPrix() * $item['quantity'];
             $total += $sousTotal;
         }
         return $total;

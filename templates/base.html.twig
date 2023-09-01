@@ -26,10 +26,15 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">Panier</a>
+								<a class="nav-link position-relative" href="{{ path('panier')}}">Panier{% if app.session.get('qty') > 0 %}
+                               
+									<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+										{{ app.session.get('qty') }}
+										<span class="visually-hidden">unread messages</span>
+                {% endif %}</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">Mon compte</a>
+								<a class="nav-link" href="{{ path('profil')}}">Mon compte</a>
 							</li>
 
                             {% if is_granted('ROLE_ADMIN') %}

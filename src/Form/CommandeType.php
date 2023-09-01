@@ -13,10 +13,10 @@ class CommandeType extends AbstractType
     {
         $builder
             ->add('quantite')
-            // ->add('montant')
-            // ->add('etat')
-            // ->add('date_enregistrement')
-            // ->add('membre')
+            ->add('montant')
+            ->add('etat')
+            ->add('date_enregistrement')
+            ->add('membre')
             ->add('produit')
         ;
     }

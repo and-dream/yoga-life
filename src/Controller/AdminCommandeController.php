@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
+use App\Service\CartService;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/admin/commande')]
 class AdminCommandeController extends AbstractController
@@ -28,22 +31,22 @@ class AdminCommandeController extends AbstractController
     }
 
     #[Route('/editer', name: 'editer_commande')]
-    public function form(Commande $commande =null, EntityManagerInterface $manager, Request $rq)
+    public function form(Commande $commande =null, EntityManagerInterface $manager, Request $rq, CartService $cs, SessionInterface $session)
     {
-        if(!$commande)
+    
+        $cart = $cs->getCartWithData();
+        
+        foreach ($cart as $item) //($item = ['produit', 'quantite'])
         {
+            $montant = $item['produit'] * $item['quantite']->getPrix();
             $commande = new Commande;
-            $commande->setDateEnregistrement(new \Datetime);
-        }
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($rq);
+            $commande->setDateEnregistrement(new \DateTime);
+            $commande->setMembre($this->getUser());
 
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $product = $commande->getProduit();
-            $qty = $commande->getQuantite();
-
-            
+            $manager->persist($commande);
         }
+
+            $manager->flush();
+       
     }
 }

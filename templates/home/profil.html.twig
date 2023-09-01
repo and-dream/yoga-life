@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<div class="container my-4">
+		<h1 class="text-center mb-4">Vos commandes</h1>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Commandes</th>
+					<th scope="col">Produit</th>
+					<th scope="col">Quantité</th>
+					<th scope="col">Prix Total</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{% for item in commandes %}
+
+					<tr class="table-primary">
+						<td>{{ item.product.id }}</td>
+						<td>{{ item.product.produit}}</td>
+						<td>{{ item.product.quantite}}</td>
+						<td>{{ item.product.montant}} €</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</div>
+
+	</tbody>
+</table>{% endblock %}
