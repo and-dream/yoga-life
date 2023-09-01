@@ -42,11 +42,19 @@ class AdminCommandeController extends AbstractController
             $commande = new Commande;
             $commande->setDateEnregistrement(new \DateTime);
             $commande->setMembre($this->getUser());
+            $commande->setEtat('En cours de traitement');
+            $commande->setProduit($item['produit']);
+            $commande->setQuantite($item['quantite']);
+            $commande->setMontant($montant);
+
 
             $manager->persist($commande);
         }
 
             $manager->flush();
-       
+        
+        // return $this->render('admin_commande/index.html.twig')
     }
+
+   
 }
